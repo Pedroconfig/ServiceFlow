@@ -8,10 +8,9 @@ services:
       POSTGRES_PASSWORD: serviceflow123
       POSTGRES_DB: serviceflow_db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - service_flow_pg_data:/var/lib/postgresql
 
 volumes:
   service_flow_pg_data:
-
