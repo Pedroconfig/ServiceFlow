@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       passwordHash,
       company: {
         create: {
-          name: result.data.name,
+          name: result.data.companyName,
         },
       },
     },
