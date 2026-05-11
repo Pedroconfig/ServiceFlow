@@ -18,6 +18,17 @@ enum ServiceOrderStatus {
   COMPLETED
   CANCELED
 }
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+
+  company Company?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 model Company {
   id        String   @id @default(cuid())
@@ -27,6 +38,9 @@ model Company {
   phone     String?
   logoUrl   String?
   address   String?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   clients       Client[]
   services      Service[]
