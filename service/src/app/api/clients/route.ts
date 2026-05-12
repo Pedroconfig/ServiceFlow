@@ -1,5 +1,7 @@
 import { prisma } from "../../lib/prisma";
 import { createClientSchema } from "../../validations/client";
+import { getCurrentUser } from "../../lib/authhelper";
+
 
 function emptyStringToNull(value: string | undefined) {
   if (value === undefined || value === "") {
@@ -9,23 +11,28 @@ function emptyStringToNull(value: string | undefined) {
   return value;
 }
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const companyId = searchParams.get("companyId");
+export async function GET() {
+  const user = await getCurrentUser();
+  if (!user) {
+    return Response.json(
+      {
+        msg: "Não autenticado",
+      },
+      { status: 401 }
+    );
+  }
+  if (!user.company) {
+    return Response.json(
+      {
+        msg: "Empresa não eocntrada para este usuário",
+      },
+      { status: 404 }
+    );
+  }
 
   const clients = await prisma.client.findMany({
-    where: companyId
-      ? {
-          companyId,
-        }
-      : undefined,
-    include: {
-      company: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
+    where: {
+      companyId: user.company.id,
     },
     orderBy: {
       createdAt: "desc",
@@ -33,35 +40,38 @@ export async function GET(request: Request) {
   });
   return Response.json(clients);
 }
+
 export async function POST(request: Request) {
+  const user = await getCurrentUser();
+  if (!user) {
+    return Response.json(
+      {
+        msg: "Não autenticado",
+      },
+      { status: 404 }
+    );
+  }
+  if (!user.company) {
+    return Response.json(
+      {
+        message: "Empresa não encontrada para este usuário.",
+      },
+      { status: 404 }
+    );
+  }
+
   const body = await request.json();
   const result = createClientSchema.safeParse(body);
-
   if (!result.success) {
     return Response.json(
       {
-        message: "dados inválidos",
+        message: "Dados inválidos.",
         errors: result.error.flatten().fieldErrors,
       },
       { status: 400 }
     );
   }
-  const commpanyExists = await prisma.company.findUnique({
-    where: {
-      id: result.data.companyId,
-    },
-    select: {
-      id: true,
-    },
-  });
-  if (!commpanyExists) {
-    return Response.json(
-      {
-        message: "empresa não encontrado",
-      },
-      { status: 404 }
-    );
-  }
+
   const client = await prisma.client.create({
     data: {
       name: result.data.name,
@@ -69,8 +79,15 @@ export async function POST(request: Request) {
       email: emptyStringToNull(result.data.email),
       phone: emptyStringToNull(result.data.phone),
       address: emptyStringToNull(result.data.address),
-      companyId: result.data.companyId,
+
+      companyId: user.company.id,
     },
   });
-  return Response.json(client, { status: 201 });
+
+  return Response.json(
+    {
+      client,
+    },
+    { status: 201 }
+  );
 }

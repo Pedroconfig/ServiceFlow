@@ -1,7 +1,6 @@
-
+import { getCurrentUser } from "@/src/app/lib/authhelper";
 import { prisma } from "../../../lib/prisma";
 import { updateClientSchema } from "@/src/app/validations/client";
-
 
 type RouteContext = {
   params: Promise<{
@@ -18,18 +17,30 @@ function emptyStringToNull(value: string | undefined) {
 }
 
 export async function GET(request: Request, context: RouteContext) {
+  const user = await getCurrentUser();
+  if (!user) {
+    return Response.json(
+      {
+        message: "not authenticated",
+      },
+      { status: 401 }
+    );
+  }
+  if (!user.company) {
+    return Response.json(
+      {
+        message: "Empresa não encontrada para este usuário.",
+      },
+      { status: 404 }
+    );
+  }
   const { id } = await context.params;
-  const client = await prisma.client.findUnique({
+  const client = await prisma.client.findFirst({
     where: {
       id,
+      companyId: user.company.id,
     },
     include: {
-      company: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
       serviceOrders: {
         select: {
           id: true,
@@ -47,7 +58,7 @@ export async function GET(request: Request, context: RouteContext) {
   if (!client) {
     return Response.json(
       {
-        message: "cliente não encontrado",
+        message: "Cliente não encontrado.",
       },
       { status: 404 }
     );
@@ -56,65 +67,111 @@ export async function GET(request: Request, context: RouteContext) {
 }
 
 export async function PATCH(request: Request, context: RouteContext) {
+  const user = await getCurrentUser();
+  if (!user) {
+    return Response.json(
+      {
+        message: "Não autenticado.",
+      },
+      { status: 401 }
+    );
+  }
+
+  if (!user.company) {
+    return Response.json(
+      {
+        message: "Empresa não encontrada para este usuário.",
+      },
+      { status: 404 }
+    );
+  }
   const { id } = await context.params;
   const body = await request.json();
+
   const result = updateClientSchema.safeParse(body);
 
   if (!result.success) {
     return Response.json(
       {
-        message: "dados inválidos",
-        errors: result.error.flatten(),
+        message: "Dados inválidos.",
+        errors: result.error.flatten().fieldErrors,
       },
       { status: 400 }
     );
   }
-  const clientExists = await prisma.client.findUnique({
+
+  const clientExists = await prisma.client.findFirst({
     where: {
       id,
+      companyId: user.company.id,
     },
     select: {
       id: true,
     },
   });
+
   if (!clientExists) {
     return Response.json(
       {
-        message: "cliente não encontrado",
+        message: "Cliente não encontrado.",
       },
       { status: 404 }
     );
   }
-  const data = {
-    ...(result.data.name !== undefined && { name: result.data.name }),
-    ...(result.data.document !== undefined && {
-      document: emptyStringToNull(result.data.document),
-    }),
-    ...(result.data.email !== undefined && {
-      email: emptyStringToNull(result.data.email),
-    }),
-    ...(result.data.phone !== undefined && {
-      phone: emptyStringToNull(result.data.phone),
-    }),
-    ...(result.data.address !== undefined && {
-      address: emptyStringToNull(result.data.address),
-    }),
-  };
-  const client = await prisma.client.update({
-    where:{
-        id,
+
+  const updatedClient = await prisma.client.update({
+    where: {
+      id,
     },
-    data,
-  })
-  return Response.json(client)
+    data: {
+      ...(result.data.name !== undefined && {
+        name: result.data.name,
+      }),
+      ...(result.data.document !== undefined && {
+        document: emptyStringToNull(result.data.document),
+      }),
+      ...(result.data.email !== undefined && {
+        email: emptyStringToNull(result.data.email),
+      }),
+      ...(result.data.phone !== undefined && {
+        phone: emptyStringToNull(result.data.phone),
+      }),
+      ...(result.data.address !== undefined && {
+        address: emptyStringToNull(result.data.address),
+      }),
+    },
+  });
+
+  return Response.json(updatedClient);
 }
 
 export async function DELETE(_request: Request, context: RouteContext) {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return Response.json(
+      {
+        message: "Não autenticado.",
+      },
+      { status: 401 }
+    );
+  }
+
+  if (!user.company) {
+    return Response.json(
+      {
+        message: "Empresa não encontrada para este usuário.",
+      },
+      { status: 404 }
+    );
+  }
+
   const { id } = await context.params;
 
-  const client = await prisma.client.findUnique({
+  const client = await prisma.client.findFirst({
     where: {
       id,
+      companyId: user.company.id,
     },
     select: {
       id: true,
@@ -151,10 +208,7 @@ export async function DELETE(_request: Request, context: RouteContext) {
     },
   });
 
-  return Response.json(
-    {
-      message: "Cliente deletado com sucesso.",
-    },
-    { status: 200 }
-  );
+  return Response.json({
+    message: "Cliente deletado com sucesso.",
+  });
 }
