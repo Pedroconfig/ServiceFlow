@@ -1,7 +1,9 @@
+import { createElement } from "react";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { getCurrentUser } from "@/src/app/lib/authhelper";
-import { prisma } from "../../../../lib/prisma";
+import { prisma } from "@/src/app/lib/prisma";
 import { ServiceOrderDocument } from "@/src/app/components/service-order-document";
+
 export const runtime = "nodejs";
 
 type RouteContext = {
@@ -11,7 +13,8 @@ type RouteContext = {
 };
 
 export async function GET(request: Request, context: RouteContext) {
-    console.log("COOKIE NA ROTA PDF:", request.headers.get("cookie"));
+  console.log("ENTROU NA ROTA SERVICE-ORDER-PDF");
+  console.log("COOKIE:", request.headers.get("cookie"));
 
   const user = await getCurrentUser();
 
@@ -34,6 +37,9 @@ export async function GET(request: Request, context: RouteContext) {
   }
 
   const { id } = await context.params;
+
+  console.log("ID DA OS:", id);
+  console.log("COMPANY DO USER:", user.company.id);
 
   const serviceOrder = await prisma.serviceOrder.findFirst({
     where: {
@@ -70,6 +76,8 @@ export async function GET(request: Request, context: RouteContext) {
     },
   });
 
+  console.log("SERVICE ORDER ENCONTRADA:", serviceOrder);
+
   if (!serviceOrder) {
     return Response.json(
       {
@@ -79,16 +87,20 @@ export async function GET(request: Request, context: RouteContext) {
     );
   }
 
-  const pdfBuffer = await renderToBuffer(
-    <ServiceOrderDocument order={serviceOrder} />
-  );
+  type PdfDocumentElement = Parameters<typeof renderToBuffer>[0];
+
+  const pdfDocument = createElement(ServiceOrderDocument, {
+    order: serviceOrder,
+  }) as unknown as PdfDocumentElement;
+
+  const pdfBuffer = await renderToBuffer(pdfDocument);
 
   const pdfBytes = Uint8Array.from(pdfBuffer);
 
   return new Response(pdfBytes, {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="${serviceOrder.code}.pdf"`,
+      "Content-Disposition": `inline; filename="${serviceOrder.code}.pdf"`,
     },
   });
 }
