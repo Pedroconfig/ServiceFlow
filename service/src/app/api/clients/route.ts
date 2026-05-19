@@ -2,7 +2,6 @@ import { prisma } from "../../lib/prisma";
 import { createClientSchema } from "../../validations/client";
 import { getCurrentUser } from "../../lib/authhelper";
 
-
 function emptyStringToNull(value: string | undefined) {
   if (value === undefined || value === "") {
     return null;
@@ -48,7 +47,7 @@ export async function POST(request: Request) {
       {
         msg: "Não autenticado",
       },
-      { status: 404 }
+      { status: 401 }
     );
   }
   if (!user.company) {
@@ -85,9 +84,8 @@ export async function POST(request: Request) {
   });
 
   return Response.json(
-    {
-      client,
-    },
+    client,
+
     { status: 201 }
   );
 }
