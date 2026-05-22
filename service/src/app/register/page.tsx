@@ -53,7 +53,7 @@ export default function RegisterPage() {
               Seu nome
             </label>
             <input
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+              className="w-full rounded-lg border border-zinc-300  text-zinc-900 placeholder:text-zinc-400 px-3 py-2 outline-none focus:border-zinc-900"
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Pedro Henrique"
@@ -65,7 +65,7 @@ export default function RegisterPage() {
               E-mail
             </label>
             <input
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+              className="w-full rounded-lg border border-zinc-300  text-zinc-900 placeholder:text-zinc-400 px-3 py-2 outline-none focus:border-zinc-900"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="pedro@email.com"
@@ -78,7 +78,7 @@ export default function RegisterPage() {
               Senha
             </label>
             <input
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+              className="w-full rounded-lg border border-zinc-300  text-zinc-900 placeholder:text-zinc-400 px-3 py-2 outline-none focus:border-zinc-900"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="******"
@@ -91,7 +91,7 @@ export default function RegisterPage() {
               Nome da empresa
             </label>
             <input
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+              className="w-full rounded-lg border border-zinc-300  text-zinc-900 placeholder:text-zinc-400 px-3 py-2 outline-none focus:border-zinc-900"
               value={companyName}
               onChange={(event) => setCompanyName(event.target.value)}
               placeholder="Oficina São Pedro"
@@ -107,7 +107,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full rounded-lg bg-zinc-900 px-4 py-2 font-medium text-white disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-lg bg-zinc-900  placeholder:text-zinc-400 px-4 py-2 font-medium text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isLoading ? "Criando conta..." : "Criar conta"}
           </button>

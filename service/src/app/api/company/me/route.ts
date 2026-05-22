@@ -80,7 +80,7 @@ export async function PATCH(request: Request) {
     );
   }
 
-   const updatedCompany = await prisma.company.update({
+  const updatedCompany = await prisma.company.update({
     where: {
       userId: user.id,
     },
@@ -108,6 +108,3 @@ export async function PATCH(request: Request) {
 
   return Response.json(updatedCompany);
 }
-
-
-

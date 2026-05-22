@@ -77,7 +77,7 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
           <a
             href="/clients"
             className="rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"
@@ -99,12 +99,22 @@ export default function DashboardPage() {
           </a>
 
           <a
-            href="/service-orders"
+            href="/service-order"
             className="rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"
           >
             <h3 className="font-bold text-zinc-900">Ordens de serviço</h3>
             <p className="mt-2 text-sm text-zinc-600">
               Crie, acompanhe e gere PDFs das ordens.
+            </p>
+          </a>
+
+          <a
+            href="/company"
+            className="rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"
+          >
+            <h3 className="font-bold text-zinc-900">Empresa</h3>
+            <p className="mt-2 text-sm text-zinc-600">
+              Atualize dados comerciais usados nas ordens de serviço.
             </p>
           </a>
         </div>

@@ -13,9 +13,7 @@ type RouteContext = {
 };
 
 export async function GET(request: Request, context: RouteContext) {
-  console.log("ENTROU NA ROTA SERVICE-ORDER-PDF");
-  console.log("COOKIE:", request.headers.get("cookie"));
-
+ 
   const user = await getCurrentUser();
 
   if (!user) {
@@ -38,8 +36,7 @@ export async function GET(request: Request, context: RouteContext) {
 
   const { id } = await context.params;
 
-  console.log("ID DA OS:", id);
-  console.log("COMPANY DO USER:", user.company.id);
+
 
   const serviceOrder = await prisma.serviceOrder.findFirst({
     where: {

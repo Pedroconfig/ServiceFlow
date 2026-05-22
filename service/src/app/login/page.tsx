@@ -55,7 +55,7 @@ export default function LoginPage() {
               E-mail
             </label>
             <input
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+              className="w-full rounded-lg border border-zinc-300  text-zinc-900 placeholder:text-zinc-400 px-3 py-2 outline-none focus:border-zinc-900"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="pedro@email.com"
@@ -68,7 +68,7 @@ export default function LoginPage() {
               Senha
             </label>
             <input
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+              className="w-full rounded-lg border border-zinc-300  text-zinc-900 placeholder:text-zinc-400 px-3 py-2 outline-none focus:border-zinc-900"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="******"
@@ -85,7 +85,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full rounded-lg bg-zinc-900 px-4 py-2 font-medium text-white disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-lg bg-zinc-900    placeholder:text-zinc-400 px-4 py-2 font-medium text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isLoading ? "Entrando..." : "Entrar"}
           </button>
