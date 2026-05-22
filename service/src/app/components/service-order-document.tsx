@@ -3,6 +3,7 @@ import {
   Page,
   Text,
   View,
+  Image,
   StyleSheet,
 } from "@react-pdf/renderer";
 
@@ -18,6 +19,7 @@ type ServiceOrderPdfData = {
     email: string | null;
     phone: string | null;
     address: string | null;
+    logoUrl: string | null;
   };
   client: {
     name: string;
@@ -58,6 +60,20 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     borderBottom: "1px solid #E5E7EB",
     paddingBottom: 16,
+  },
+  headerTop: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    gap: 16,
+  },
+  headerInfo: {
+    flex: 1,
+  },
+  logo: {
+    width: 90,
+    height: 60,
+    objectFit: "contain",
   },
   title: {
     fontSize: 20,
@@ -137,16 +153,28 @@ const styles = StyleSheet.create({
   },
 });
 
-export function ServiceOrderDocument({ order }: { order: ServiceOrderPdfData }) {
+export function ServiceOrderDocument({
+  order,
+}: {
+  order: ServiceOrderPdfData;
+}) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Text style={styles.title}>Ordem de Serviço</Text>
-          <Text style={styles.subtitle}>
-            {order.code} • Emitida em {formatDate(order.createdAt)} • Status:{" "}
-            {order.status}
-          </Text>
+          <View style={styles.headerTop}>
+            <View style={styles.headerInfo}>
+              <Text style={styles.title}>Ordem de Serviço</Text>
+              <Text style={styles.subtitle}>
+                {order.code} • Emitida em {formatDate(order.createdAt)} •
+                Status: {order.status}
+              </Text>
+            </View>
+
+            {order.company.logoUrl && (
+              <Image src={order.company.logoUrl} style={styles.logo} />
+            )}
+          </View>
         </View>
 
         <View style={styles.section}>

@@ -236,6 +236,8 @@ export default function CompanyPage() {
             {logoUrl ? (
               <Image
                 src={logoUrl}
+                width={160}
+                height={64}
                 alt="Logo da empresa"
                 className="mb-4 h-16 max-w-full object-contain"
               />

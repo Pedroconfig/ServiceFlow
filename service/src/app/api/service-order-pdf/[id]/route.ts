@@ -13,7 +13,6 @@ type RouteContext = {
 };
 
 export async function GET(request: Request, context: RouteContext) {
- 
   const user = await getCurrentUser();
 
   if (!user) {
@@ -36,8 +35,6 @@ export async function GET(request: Request, context: RouteContext) {
 
   const { id } = await context.params;
 
-
-
   const serviceOrder = await prisma.serviceOrder.findFirst({
     where: {
       id,
@@ -51,6 +48,7 @@ export async function GET(request: Request, context: RouteContext) {
           email: true,
           phone: true,
           address: true,
+          logoUrl: true,
         },
       },
       client: {

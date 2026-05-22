@@ -8,6 +8,7 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - /app/.next
     command: sh -c "npm ci && npm run dev"
     networks:
       - service_network
