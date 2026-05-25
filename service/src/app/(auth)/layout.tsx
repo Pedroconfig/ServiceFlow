@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/src/app/lib/authhelper";
 
+
 export default async function AuthLayout({
   children,
 }: {

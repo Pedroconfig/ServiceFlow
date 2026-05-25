@@ -2,11 +2,11 @@
 
 import { useState, SubmitEvent } from "react";
 import { useRouter } from "next/navigation";
-import type { Metadata } from "next";
-export const metadata: Metadata = {
-  title: "Service Flow",
-  description: "Sistema de ordem de serviço",
-};
+// import type { Metadata } from "next";
+// export const metadata: Metadata = {
+//   title: "Service Flow",
+//   description: "Sistema de ordem de serviço",
+// };
 
 export default function LoginPage() {
   const router = useRouter();
