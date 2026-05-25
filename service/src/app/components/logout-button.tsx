@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+
 export default function LogoutButton() {
   const router = useRouter();
   async function handleLogout() {
@@ -8,8 +9,8 @@ export default function LogoutButton() {
       method: "POST",
     });
 
-    router.push("/login");
     router.refresh();
+    router.push("/login");
   }
 
   return (
