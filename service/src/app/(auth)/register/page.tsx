@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { SubmitEvent, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   ArrowRight,
@@ -56,51 +57,70 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      <div className="grid min-h-screen lg:grid-cols-[1fr_560px]">
-        <section className="hidden bg-slate-950 px-10 py-12 text-white lg:flex lg:flex-col lg:justify-between">
-          <div>
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-sm font-bold text-slate-950">
-                SF
+    <main className="min-h-dvh bg-slate-50">
+      <div className="grid min-h-dvh lg:grid-cols-[minmax(0,1fr)_520px]">
+        <section className="relative hidden overflow-hidden bg-slate-950 px-10 py-10 text-white lg:flex lg:min-h-dvh lg:flex-col">
+          <Image
+            src="/image/service-register.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 1024px) calc(100vw - 520px), 0px"
+            className="z-0 pointer-events-none select-none object-cover object-[72%_center] opacity-60"
+          />
+
+          <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,#020617_0%,rgba(2,6,23,0.94)_32%,rgba(2,6,23,0.72)_58%,rgba(2,6,23,0.38)_100%)]" />
+
+          <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(2,6,23,0.05)_0%,rgba(2,6,23,0.18)_55%,rgba(2,6,23,0.75)_100%)]" />
+
+          <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_78%_42%,rgba(37,99,235,0.24),transparent_38%)]" />
+
+          <div className="relative z-20 flex min-h-full flex-1 flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-sm font-bold text-slate-950">
+                  SF
+                </div>
+
+                <div>
+                  <h1 className="text-lg font-bold">ServiceFlow</h1>
+                  <p className="text-sm text-slate-300">
+                    Gestão de ordens de serviço
+                  </p>
+                </div>
               </div>
 
-              <div>
-                <h1 className="text-lg font-bold">ServiceFlow</h1>
-                <p className="text-sm text-slate-400">
-                  Gestão de ordens de serviço
+              <div className="mt-16 max-w-xl">
+                <p className="text-sm font-medium uppercase tracking-[0.3em] text-blue-200">
+                  Comece agora
+                </p>
+
+                <h2 className="mt-6 text-4xl font-bold leading-tight tracking-tight xl:text-5xl">
+                  Crie sua conta e organize sua operação.
+                </h2>
+
+                <p className="mt-6 max-w-lg text-base leading-7 text-slate-200 xl:text-lg xl:leading-8">
+                  Cadastre sua empresa, adicione clientes, serviços e gere
+                  ordens de serviço profissionais em poucos minutos.
                 </p>
               </div>
             </div>
 
-            <div className="mt-20 max-w-xl">
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-slate-400">
-                Comece agora
-              </p>
+            <div className="mt-10 max-w-2xl rounded-3xl border border-white/10 bg-white/10 p-6 shadow-2xl backdrop-blur-md">
+              <div className="flex items-start gap-4">
+                <div className="rounded-2xl bg-white p-3 text-slate-950 shadow-sm">
+                  <FileText className="h-5 w-5" />
+                </div>
 
-              <h2 className="mt-6 text-5xl font-bold leading-tight tracking-tight">
-                Crie sua conta e organize sua operação.
-              </h2>
-
-              <p className="mt-6 text-lg leading-8 text-slate-300">
-                Cadastre sua empresa, adicione clientes, serviços e gere ordens
-                de serviço profissionais em poucos minutos.
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-            <div className="flex items-start gap-4">
-              <div className="rounded-2xl bg-white p-3 text-slate-950">
-                <FileText className="h-5 w-5" />
-              </div>
-
-              <div>
-                <p className="font-semibold">Agilidade e Organização</p>
-                <p className="mt-2 text-sm leading-6 text-slate-400">
-                  Autenticação, empresa, clientes, serviços, ordens e PDF em um
-                  fluxo completo de produto.
-                </p>
+                <div>
+                  <p className="font-semibold text-white">
+                    Agilidade e Organização
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">
+                    Autenticação, empresa, clientes, serviços, ordens e PDF em
+                    um fluxo completo de produto.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -137,7 +157,7 @@ export default function RegisterPage() {
 
               <form onSubmit={handleSubmit} className="mt-8 space-y-5">
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <label className="mb-1.5 block text-sm font-medium   text-slate-700">
                     Seu nome
                   </label>
 
@@ -145,7 +165,7 @@ export default function RegisterPage() {
                     <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                     <input
-                      className="w-full rounded-xl border border-slate-300 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
+                      className="w-full rounded-xl border border-slate-300  text-slate-950 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
                       value={name}
                       onChange={(event) => setName(event.target.value)}
                       placeholder="Pedro Henrique"
@@ -154,7 +174,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <label className="mb-1.5 block text-sm font-medium   text-slate-700">
                     E-mail
                   </label>
 
@@ -162,7 +182,7 @@ export default function RegisterPage() {
                     <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                     <input
-                      className="w-full rounded-xl border border-slate-300 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
+                      className="w-full rounded-xl border border-slate-300   text-slate-950  bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
                       placeholder="pedro@email.com"
@@ -180,7 +200,7 @@ export default function RegisterPage() {
                     <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                     <input
-                      className="w-full rounded-xl border border-slate-300 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
+                      className="w-full rounded-xl border border-slate-300   text-slate-950  bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
                       placeholder="Mínimo de 6 caracteres"
@@ -198,7 +218,7 @@ export default function RegisterPage() {
                     <Building2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                     <input
-                      className="w-full rounded-xl border border-slate-300 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
+                      className="w-full rounded-xl border border-slate-300   text-slate-950  bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
                       value={companyName}
                       onChange={(event) => setCompanyName(event.target.value)}
                       placeholder="Oficina São Pedro"

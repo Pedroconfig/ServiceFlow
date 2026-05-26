@@ -4,6 +4,7 @@ import Link from "next/link";
 import { SubmitEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, FileText, Lock, Mail } from "lucide-react";
+import Image from "next/image";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -45,10 +46,23 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      <div className="grid min-h-screen lg:grid-cols-[1fr_520px]">
-        <section className="hidden bg-slate-950 px-10 py-12 text-white lg:flex lg:flex-col lg:justify-between">
-          <div>
+    <main className="min-h-dvh bg-slate-50">
+      <div className="grid min-h-dvh lg:grid-cols-[minmax(0,1fr)_520px]">
+        <section className="relative hidden overflow-hidden bg-slate-950 px-10 py-12 text-white lg:flex lg:flex-col">
+          <Image
+            src="/image/serviceflow-hero.jpg"
+            alt="imagem Ilustrativa service-flow"
+            fill
+            priority
+            sizes="(min-width: 1024px) calc(100vw - 520px), 0px"
+            className="pointer-events-none select-none object-cover object-[70%_center] opacity-60"
+          />
+
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,#020617_0%,rgba(2,6,23,0.98)_32%,rgba(2,6,23,0.82)_58%,rgba(2,6,23,0.55)_100%)]" />
+
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_45%,rgba(37,99,235,0.22),transparent_35%)]" />
+
+          <div className="relative z-10 flex min-h-full flex-col">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-sm font-bold text-slate-950">
                 SF
@@ -62,42 +76,44 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="mt-20 max-w-xl">
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-slate-400">
-                Plataforma B2B
-              </p>
+            <div className="flex flex-1 items-center">
+              <div className="max-w-xl">
+                <p className="text-sm font-medium uppercase tracking-[0.3em] text-slate-400">
+                  Plataforma B2B
+                </p>
 
-              <h2 className="mt-6 text-5xl font-bold leading-tight tracking-tight">
-                Organize clientes, serviços e ordens em um só lugar.
-              </h2>
+                <h2 className="mt-6 text-5xl font-bold leading-tight tracking-tight">
+                  Organize clientes, serviços e ordens em um só lugar.
+                </h2>
 
-              <p className="mt-6 text-lg leading-8 text-slate-300">
-                Crie ordens de serviço personalizadas, acompanhe status e gere
-                PDFs profissionais com os dados da sua empresa.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-              <p className="text-3xl font-bold">PDF</p>
-              <p className="mt-2 text-sm text-slate-400">
-                Documentos prontos para enviar.
-              </p>
+                <p className="mt-6 max-w-lg text-lg leading-8 text-slate-300">
+                  Crie ordens de serviço personalizadas, acompanhe status e gere
+                  PDFs profissionais com os dados da sua empresa.
+                </p>
+              </div>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-              <p className="text-3xl font-bold">CRM</p>
-              <p className="mt-2 text-sm text-slate-400">
-                Clientes e serviços centralizados.
-              </p>
-            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur">
+                <p className="text-3xl font-bold">PDF</p>
+                <p className="mt-2 text-sm text-slate-300">
+                  Documentos prontos para enviar.
+                </p>
+              </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-              <p className="text-3xl font-bold">OS</p>
-              <p className="mt-2 text-sm text-slate-400">
-                Controle do fluxo operacional.
-              </p>
+              <div className="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur">
+                <p className="text-3xl font-bold">CRM</p>
+                <p className="mt-2 text-sm text-slate-300">
+                  Clientes e serviços centralizados.
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur">
+                <p className="text-3xl font-bold">OS</p>
+                <p className="mt-2 text-sm text-slate-300">
+                  Controle do fluxo operacional.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -141,7 +157,7 @@ export default function LoginPage() {
                     <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                     <input
-                      className="w-full rounded-xl border border-slate-300 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
+                      className="w-full rounded-xl border  text-slate-950 border-slate-300 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
                       placeholder="pedro@email.com"
@@ -159,7 +175,7 @@ export default function LoginPage() {
                     <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                     <input
-                      className="w-full rounded-xl border border-slate-300 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
+                      className="w-full rounded-xl border  text-slate-950 border-slate-300 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-200"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
                       placeholder="Digite sua senha"
