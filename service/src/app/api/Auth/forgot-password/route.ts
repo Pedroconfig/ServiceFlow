@@ -7,7 +7,6 @@ import {
 } from "@/src/app/lib/password-reset";
 import { forgotPasswordSchema } from "@/src/app/validations/auth";
 
-
 export async function POST(request: Request) {
   const body = await request.json();
   const result = forgotPasswordSchema.safeParse(body);
@@ -63,7 +62,7 @@ export async function POST(request: Request) {
   if (!appUrl) {
     throw new Error("NEXT_PUBLIC_APP_URL não foi definida");
   }
-  const resetUrl = `${appUrl}/reset-password?rtoken=${rawToken}`;
+  const resetUrl = `${appUrl}/reset-password?token=${rawToken}`;
   await sendPasswordResetEmail({
     to: user.email,
     resetUrl,
