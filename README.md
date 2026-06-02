@@ -136,7 +136,7 @@ Cada usuário possui uma empresa, e os clientes, serviços e ordens ficam vincul
 Crie um arquivo `.env` na raiz do projeto `service/` com as variáveis abaixo:
 
 ```env
-DATABASE_URL="postgresql://usuario:senha@localhost:5432/serviceflow"
+DATABASE_URL="postgresql://usuario:senha@localhost:5432/nome_base_db"
 JWT_SECRET="sua_chave_secreta"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 RESEND_API_KEY="sua_api_key_do_resend"
